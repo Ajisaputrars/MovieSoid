@@ -10,7 +10,7 @@ import Foundation
 import AsyncDisplayKit
 import IGListKit
 
-class DetailMovieController: ASViewController<ASCollectionNode> {
+class DetailMovieController: ASDKViewController<ASCollectionNode> {
 
     let collectionNode: ASCollectionNode!
     let backgroundImageNode: ASNetworkImageNode!

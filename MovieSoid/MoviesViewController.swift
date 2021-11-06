@@ -10,7 +10,7 @@ import UIKit
 import Moya_ObjectMapper
 import AsyncDisplayKit
 
-class MoviesViewController: ASViewController<ASCollectionNode> {
+class MoviesViewController: ASDKViewController<ASCollectionNode> {
 
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -21,7 +21,7 @@ class MoviesViewController: ASViewController<ASCollectionNode> {
     var page: Int = 1
     var isLoading: Bool = false
 
-    init() {
+  override init() {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.minimumLineSpacing = 10
         flowLayout.minimumInteritemSpacing = 8
