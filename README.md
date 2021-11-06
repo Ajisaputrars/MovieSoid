@@ -1,6 +1,6 @@
 ## MovieSoid
 
-Swift 4.2
+Swift 5
 
 Demo Texture + IGListKit (Swift).
 
