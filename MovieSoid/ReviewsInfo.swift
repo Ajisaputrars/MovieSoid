@@ -11,77 +11,77 @@ import ObjectMapper
 import IGListKit
 
 class Reviews: Mappable {
-    var id: Int!
-    var author: String!
-    var content: String!
-    var isSeeMore: Bool!
-
-    required init?(map: Map) { }
-
-    func mapping(map: Map) {
-        id <- map["id"]
-        author <- map["author"]
-        content <- map["content"]
-        isSeeMore = false
-    }
+  var id: Int!
+  var author: String!
+  var content: String!
+  var isSeeMore: Bool!
+  
+  required init?(map: Map) { }
+  
+  func mapping(map: Map) {
+    id <- map["id"]
+    author <- map["author"]
+    content <- map["content"]
+    isSeeMore = false
+  }
 }
 
 extension Reviews {
-    func attrStringForAuthor(withSize size: CGFloat) -> NSAttributedString {
-        let attr = [
-            NSAttributedString.Key.foregroundColor : Constants.Color.actionColor,
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: size)
-        ]
-        return NSAttributedString(string: "@\(self.author!)", attributes: attr)
-    }
-
-    func attrStringForContent(withSize size: CGFloat) -> NSAttributedString {
-        let attr = [
-            NSAttributedString.Key.foregroundColor : UIColor.lightGray,
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: size)
-        ]
-        return NSAttributedString(string: self.content, attributes: attr)
-    }
+  func attrStringForAuthor(withSize size: CGFloat) -> NSAttributedString {
+    let attr = [
+      NSAttributedString.Key.foregroundColor : Constants.Color.actionColor,
+      NSAttributedString.Key.font: UIFont.systemFont(ofSize: size)
+    ]
+    return NSAttributedString(string: "@\(self.author!)", attributes: attr)
+  }
+  
+  func attrStringForContent(withSize size: CGFloat) -> NSAttributedString {
+    let attr = [
+      NSAttributedString.Key.foregroundColor : UIColor.lightGray,
+      NSAttributedString.Key.font: UIFont.systemFont(ofSize: size)
+    ]
+    return NSAttributedString(string: self.content, attributes: attr)
+  }
 }
 
 class ReviewsInfo: Mappable, DetailInfoSortProtocol {
-    var totalPages: Int!
-    var reviews:[Reviews]!
-    var totalResults: Int!
-    var page: Int!
-
-    required init?(map: Map) { }
-
-    func mapping(map: Map) {
-        totalPages <- map["total_pages"]
-        reviews <- map["results"]
-        totalResults <- map["total_results"]
-        page <- map["page"]
+  var totalPages: Int!
+  var reviews:[Reviews]!
+  var totalResults: Int!
+  var page: Int!
+  
+  required init?(map: Map) { }
+  
+  func mapping(map: Map) {
+    totalPages <- map["total_pages"]
+    reviews <- map["results"]
+    totalResults <- map["total_results"]
+    page <- map["page"]
+  }
+  
+  var detailIndex: Int = 0
+  
+  var identifier: Int {
+    set {
+      detailIndex = newValue
     }
-
-    var detailIndex: Int = 0
-
-    var identifier: Int {
-        set {
-            detailIndex = newValue
-        }
-
-        get {
-            return detailIndex
-        }
+    
+    get {
+      return detailIndex
     }
+  }
 }
 
 extension ReviewsInfo: ListDiffable {
-    func diffIdentifier() -> NSObjectProtocol {
-        return "\(detailIndex)" as NSObjectProtocol
-    }
-
-    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        if self === object { return true }
-        guard let object = object as? ReviewsInfo else { return false }
-        return self.detailIndex == object.detailIndex
-    }
+  func diffIdentifier() -> NSObjectProtocol {
+    return "\(detailIndex)" as NSObjectProtocol
+  }
+  
+  func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
+    if self === object { return true }
+    guard let object = object as? ReviewsInfo else { return false }
+    return self.detailIndex == object.detailIndex
+  }
 }
 
 

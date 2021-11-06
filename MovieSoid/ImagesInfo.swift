@@ -12,54 +12,54 @@ import IGListKit
 
 
 struct Image: Mappable {
-    var ratio: Float!
-    var filePath: String!
-    var height: Int!
-    var width: Int!
-
-    init?(map: Map) { }
-
-    mutating func mapping(map: Map) {
-        ratio <- map["aspect_ratio"]
-        height <- map["height"]
-        width <- map["width"]
-        filePath <- map["file_path"]
-    }
+  var ratio: Float!
+  var filePath: String!
+  var height: Int!
+  var width: Int!
+  
+  init?(map: Map) { }
+  
+  mutating func mapping(map: Map) {
+    ratio <- map["aspect_ratio"]
+    height <- map["height"]
+    width <- map["width"]
+    filePath <- map["file_path"]
+  }
 }
 
 class ImagesInfo: Mappable, DetailInfoSortProtocol {
-    var posters: [Image]!
-    var backdrops: [Image]!
-
-    required init?(map: Map) { }
-
-    func mapping(map: Map) {
-        posters <- map["posters"]
-        backdrops <- map["backdrops"]
+  var posters: [Image]!
+  var backdrops: [Image]!
+  
+  required init?(map: Map) { }
+  
+  func mapping(map: Map) {
+    posters <- map["posters"]
+    backdrops <- map["backdrops"]
+  }
+  
+  var detailIndex: Int = 0
+  
+  var identifier: Int {
+    set {
+      detailIndex = newValue
     }
-
-    var detailIndex: Int = 0
-
-    var identifier: Int {
-        set {
-            detailIndex = newValue
-        }
-
-        get {
-            return detailIndex
-        }
+    
+    get {
+      return detailIndex
     }
+  }
 }
 
 extension ImagesInfo: ListDiffable {
-    func diffIdentifier() -> NSObjectProtocol {
-        return "\(detailIndex)" as NSObjectProtocol
-    }
-
-    func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
-        if self === object { return true }
-        guard let object = object as? ImagesInfo else { return false }
-        return self.detailIndex == object.detailIndex
-    }
-
+  func diffIdentifier() -> NSObjectProtocol {
+    return "\(detailIndex)" as NSObjectProtocol
+  }
+  
+  func isEqual(toDiffableObject object: ListDiffable?) -> Bool {
+    if self === object { return true }
+    guard let object = object as? ImagesInfo else { return false }
+    return self.detailIndex == object.detailIndex
+  }
+  
 }

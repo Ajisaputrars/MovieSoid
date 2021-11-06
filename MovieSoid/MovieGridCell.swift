@@ -10,31 +10,31 @@ import Foundation
 import AsyncDisplayKit
 
 class MovieGridCell: MovieBaseCell {
-
-    override init(model: Movies) {
-        super.init(model: model)
-        self.backgroundColor = Constants.Color.headerColor
+  
+  override init(model: Movies) {
+    super.init(model: model)
+    self.backgroundColor = Constants.Color.headerColor
+  }
+  
+  override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
+    
+    let width = constrainedSize.min.width
+    let height = width * 3 / 2.0
+    
+    self.posterImageNode.style.preferredSize = CGSize(width: width, height: height)
+    self.titleTextNode.style.flexGrow = 1
+    self.titleTextNode.style.flexShrink = 1
+    
+    var children: [ASLayoutElement] = [self.posterImageNode, self.titleTextNode, self.yearTextNode]
+    if let rate = self.rateTextNode.attributedString(), rate.length > 0 {
+      children.append(self.rateTextNode)
     }
-
-    override func layoutSpecThatFits(_ constrainedSize: ASSizeRange) -> ASLayoutSpec {
-
-        let width = constrainedSize.min.width
-        let height = width * 3 / 2.0
-
-        self.posterImageNode.style.preferredSize = CGSize(width: width, height: height)
-        self.titleTextNode.style.flexGrow = 1
-        self.titleTextNode.style.flexShrink = 1
-
-        var children: [ASLayoutElement] = [self.posterImageNode, self.titleTextNode, self.yearTextNode]
-        if let rate = self.rateTextNode.attributedString(), rate.length > 0 {
-            children.append(self.rateTextNode)
-        }
-
-        let mainStackSpec = ASStackLayoutSpec(direction: .vertical, spacing: 2, justifyContent: .center, alignItems: .center, children: children)
-        mainStackSpec.style.width = ASDimension(unit: .points, value: width)
-
-        let insetSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0), child: mainStackSpec)
-
-        return insetSpec
-    }
+    
+    let mainStackSpec = ASStackLayoutSpec(direction: .vertical, spacing: 2, justifyContent: .center, alignItems: .center, children: children)
+    mainStackSpec.style.width = ASDimension(unit: .points, value: width)
+    
+    let insetSpec = ASInsetLayoutSpec(insets: UIEdgeInsets(top: 0, left: 0, bottom: 8, right: 0), child: mainStackSpec)
+    
+    return insetSpec
+  }
 }

@@ -9,5 +9,5 @@
 import Foundation
 
 protocol DetailInfoSortProtocol {
-    var identifier: Int { get set }
+  var identifier: Int { get set }
 }
